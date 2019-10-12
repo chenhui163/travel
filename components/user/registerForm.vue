@@ -136,7 +136,32 @@ export default {
         },
         // 注册
         handleRegSubmit(){
+            // 进行表单非空验证
+            this.$refs.form.validate(async (valid) => {
+                if (valid) {
+                    // 获取接口需要的数据
+                    const { checkPassword, ...props } = this.form;
 
+                    let res = await this.$axios({
+                        url: "/accounts/register",
+                        method: "POST",
+                        data: props
+                    })
+                    const { status, data } = res;
+
+                    if( status===200 ){
+                        this.$message.success("注册成功！");
+                        // 登录
+                        this.$store.commit("user/setUserInfo", data);
+                        // 跳转到首页
+                        this.$router.push("/");
+                    }
+
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
         }
     }
 

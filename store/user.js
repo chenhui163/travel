@@ -1,11 +1,13 @@
 // 用户管理
 
 // 固定的写法，暴露出state
-export const state = {
-    // 采用接口返回的数据结构
-    userInfo: {
-        token: "",
-        user: {}
+export const state = ()=>{
+    return {
+        // 采用接口返回的数据结构
+        userInfo: {
+            token: "",
+            user: {}
+        }
     }
 }
 

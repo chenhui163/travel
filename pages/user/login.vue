@@ -20,23 +20,25 @@
                 </el-row>
 
                 <!-- 登录功能组件 -->
-                <LoginForm v-if="currentTab == 0"/>
+                <loginForm v-if="currentTab == 0"/>
 
                 <!-- 注册功能组件 -->
-                <!-- <RegisterForm v-if="currentTab == 1"/> -->
+                <registerForm v-if="currentTab == 1"/>
             </div>
         </el-row>
     </div>
 </template>
 
 <script>
-import LoginForm from "@/components/user/LoginForm";
+import loginForm from "@/components/user/loginForm";
+import registerForm from "@/components/user/registerForm";
 
 export default {
 
     // 注册
     components:{
-        LoginForm
+        loginForm,
+        registerForm
     },
 
     // 数据

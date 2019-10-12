@@ -73,10 +73,19 @@ export default {
 
                     if(status === 200 ) {
                         this.$message.success("登录成功！");
+
+                        // 将数据存到store
+                        // 通过调用mutation下的方法掉修改state的值
+                        // commit方法调用mutation的etUserInfo方法进行修改,类似于$emit
+                        this.$store.commit("user/setUserInfo", data);
+
+                        // 清空表单数据对象
                         this.form = {
                             username: "",
                             password: ""
                         };
+                        // 跳转到首页
+                        this.$router.push("/");
                     }
 
                 } else {

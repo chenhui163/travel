@@ -61,7 +61,33 @@ export default {
     methods:{
         // 登录
         handleLoginSubmit(){
-            
+            // 验证表单数据是否完整
+            this.$refs.form.validate( async (valid) => {
+                if (valid) {
+                    let res = await this.$axios({
+                        url: "/accounts/login",
+                        method: "POST",
+                        data: this.form
+                    });
+                    const { status , data } = res;
+
+                    if(status === 200 ) {
+                        this.$message.success("登录成功！");
+                        this.form = {
+                            username: "",
+                            password: ""
+                        };
+                    }
+
+                } else {
+                    console.log('登录失败，请重新输入！');
+                    this.form = {
+                        username: "",
+                        password: ""
+                    };
+                    return false;
+                }
+            });
         }
     }
 

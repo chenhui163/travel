@@ -44,7 +44,7 @@ export default {
     // 数据
     data(){
         return {
-            currentTab: 0
+            currentTab: 1
         }
     },
 

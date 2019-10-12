@@ -60,6 +60,21 @@ export default {
 
     // 数据
     data(){
+
+        // 确认密码的校验的方法
+        // rule: 当前的规则，一般是用不上这个参数
+        // value: 输入框的值
+        // callback: 回调函数。该函数必须要调用，调用时候可以传递错误的对象信息
+        var validatePass2 = (rule, value, callback) => {
+            if (value === '') {
+                callback(new Error('请再次输入密码'));
+            } else if (value !== this.form.password) {
+                callback(new Error('两次输入密码不一致!'));
+            } else {
+                callback();
+            }
+        };
+
         return {
             // 表单数据对象
             form: {
@@ -70,6 +85,7 @@ export default {
                 checkPassword: ""   // 确认密码
             },
             // 表单验证规则
+            // validator验证的validatePass2是一个回调函数
             rules: {
                 username: [
                     { required: true, message: '请输入用户名', trigger: 'blur' }
@@ -84,7 +100,7 @@ export default {
                     { required: true, message: '请输入密码', trigger: 'blur' }
                 ],
                 checkPassword: [
-                    { required: true, message: '两次密码不一致', trigger: 'blur' }
+                    { validator: validatePass2, trigger: 'blur' }
                 ]
             }
             
@@ -94,7 +110,28 @@ export default {
     // 方法
     methods:{
         // 发送验证码
-        handleSendCaptcha(){
+        async handleSendCaptcha(){
+            // 如果手机号为空，无法发送手机验证请求
+            if(!this.form.username){
+                this.$message.error("请输入手机号");
+                return ;
+            }
+
+            let res = await this.$axios({
+                url: "/captchas",
+                method:"POST",
+                data: {
+                    tel: this.form.username
+                }
+            })
+            const code = res.data.code;
+
+            // 验证码弹窗提示
+            if(res.status===200){
+                this.$alert(`${code}`, '注册验证码', {
+                    confirmButtonText: '确定'
+                });
+            }
 
         },
         // 注册

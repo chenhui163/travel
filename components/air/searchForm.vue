@@ -122,11 +122,9 @@ export default {
         // 目标城市输入框获得焦点时触发
         // value 是选中的值，cb是回调函数，接收要展示的列表
         queryDestSearch(value, cb){
-            cb([
-                {value: 1},
-                {value: 2},
-                {value: 3},
-            ]);
+            // 出发城市输入框值发生变化的业务功能和目标城市的一样，因此直接调用出发城市的方法
+            // value是目标城市输入框选中的值，cb是目标城市的回调函数
+            this.queryDepartSearch(value, cb);
         },
        
         // 出发城市下拉选择时触发

@@ -117,22 +117,16 @@ export default {
                 return ;
             }
 
-            let res = await this.$axios({
-                url: "/captchas",
-                method:"POST",
-                data: {
-                    tel: this.form.username
-                }
-            })
-            const code = res.data.code;
+            // 使用store.dispatch调用actions中的发送验证码功能
+            const res = await this.$store.dispatch("user/sendCaptcha", this.form.username);
 
+            const code = res.data.code;
             // 验证码弹窗提示
             if(res.status===200){
                 this.$alert(`${code}`, '注册验证码', {
                     confirmButtonText: '确定'
                 });
             }
-
         },
         // 注册
         handleRegSubmit(){

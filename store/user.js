@@ -34,6 +34,19 @@ export const actions = {
             store.commit("setUserInfo", res.data);
         }
         return res;
+    },
+
+
+    // 发送验证码
+    async sendCaptcha(store, data){
+        let res = await this.$axios({
+            url: "/captchas",
+            method:"POST",
+            data: {
+                tel: data
+            }
+        });
+        return res;
     }
 
 };

@@ -169,7 +169,48 @@ export default {
 
         // 提交表单是触发
         handleSubmit(){
-           
+            console.log(this.form)
+
+            // 自定义验证
+            let rules = {
+                // message是错误信息，value是表单中对应的值
+                departCity: {
+                    message: '请输入活动名称', value: this.form.departCity 
+                },
+                destCity: {
+                    message: '请输入活动名称', value: this.form.destCity 
+                },
+                departDate: {
+                    message: '请输入活动名称', value: this.form.departDate 
+                }
+            }
+
+            // 循环rules这个对象，判断对象属性的value如果是空的，打印出message错误信息
+
+            // 使用开关思想，初始为true，如果找到value为空的，就改变开关状态
+            let flag = true;
+
+            Object.keys(rules).forEach(v=>{
+                // 判断如果有空的value，name就不再进行验证，直接return结束
+                if(!flag) return;
+
+                const { message, value } = rules[v];
+                // 对象属性的value如果是空
+                if(!value){
+                    // 将flag改变为false
+                    flag = false;
+                    this.$message.error(message);
+                }
+            })
+
+            // 如果存在有空的value，直接return结束，否则说明数据完整
+            if(!flag) return;
+
+            // 数据完整时执行搜索跳转，同时将数据传递过去
+            this.$router.push({
+                path: "/air/flights",
+                query: this.form
+            })
         }
     },
     mounted() {

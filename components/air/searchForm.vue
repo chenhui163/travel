@@ -184,13 +184,13 @@ export default {
             let rules = {
                 // message是错误信息，value是表单中对应的值
                 departCity: {
-                    message: '请输入活动名称', value: this.form.departCity 
+                    message: '请输入出发城市', value: this.form.departCity 
                 },
                 destCity: {
-                    message: '请输入活动名称', value: this.form.destCity 
+                    message: '请输入到达城市', value: this.form.destCity 
                 },
                 departDate: {
-                    message: '请输入活动名称', value: this.form.departDate 
+                    message: '请输入出发时间', value: this.form.departDate 
                 }
             }
 

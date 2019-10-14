@@ -136,7 +136,9 @@ export default {
 
         // 目标城市下拉选择时触发
         handleDestSelect(item) {
-            
+            // 获取表单需要的数据，目标城市和目标城市代码
+            this.form.destCity = item.value;
+            this.form.destCode = item.code;
         },
 
         // 确认选择日期时触发

@@ -98,6 +98,7 @@ export default {
         queryDepartSearch(value, cb){
             // 如果输入框没有值，不执行搜索
             if(!value){
+                this.cities = [];
                 cb([]);
                 return;
             }
@@ -154,6 +155,9 @@ export default {
         // 使用中括号获取对象的属性的方式，能够在同一个函数事项两个输入框的赋值
         // 输入框失去焦点时，默认获取第一项
         handleBlur(type){
+            // 如果输入框没有值，就不执行下面的动作
+            if(this.cities.length === 0 ) return ;
+
             this.form[type + "City"] = this.cities[0].value;
             this.form[type + "Code"] = this.cities[0].code;
         },

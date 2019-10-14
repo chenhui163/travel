@@ -87,14 +87,26 @@ export default {
             
         },
         
-        // 出发城市输入框获得焦点时触发
-        // value 是选中的值，cb是回调函数，接收要展示的列表
+        // 出发城市输入框值发生变化时候会触发
+        // value：输入框的值
+        // cb:回调函数，必须要调用，调用时候必须要传递一个数组的参数，
+        // 数组中的元素必须是一个对象，对象中必须要有value属性
         queryDepartSearch(value, cb){
-            cb([
-                {value: 1},
-                {value: 2},
-                {value: 3},
-            ]);
+            // 如果输入框没有值，不执行搜索
+            if(!value) return;
+
+            // 搜索实时机票城市
+            this.$axios({
+                url: "/airs/city?name=" + value
+            }).then(res=>{
+                const { data } = res.data;
+                // 遍历data数组，给每一项加上value属性
+                const cities = data.filter(v=>{
+                    v.value = v.name.replace("市","");
+                    return v
+                });
+                cb(cities);
+            });
         },
 
         // 目标城市输入框获得焦点时触发

@@ -46,7 +46,7 @@
                     <img :src="item.cover"/>
                     <el-row class="layer-bar" type="flex" justify="space-between">
                         <span>{{item.departCity}}-{{item.destCity}}</span>
-                        <span>￥699</span>
+                        <span>￥{{item.price}}</span>
                     </el-row>
                 </nuxt-link>
             </el-col>
@@ -66,20 +66,23 @@ export default {
         SearchForm
     },
 
-    
+    // 数据
     data(){
         return {
-            sales: [{
-                cover: "https://gss0.bdstatic.com/94o3dSag_xI4khGkpoWK1HF6hhy/baike/s%3D220/sign=9154c841bcfd5266a32b3b169b199799/3812b31bb051f8199687c7e0d0b44aed2f73e7fe.jpg",
-                departCity: "广州",
-                departCode: "CAN",
-                departDate: "2019-06-17",
-                destCity: "上海",
-                destCode: "SHA",
-                price: 760
-            }]
+            sales: []
         }
     },
+
+    // 页面加载完毕时执行
+    mounted(){
+        // 请求接口获取特价机票数据
+        this.$axios({
+            url: "/airs/sale"
+        }).then(res=>{
+            const {data} = res.data;
+            this.sales = data;
+        })
+    }
 
 }
 </script>

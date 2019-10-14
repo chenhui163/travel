@@ -92,7 +92,12 @@ export default {
     methods: {
         // tab切换时触发
         handleSearchTab(item, index){
-            
+            this.currentTab = index;
+
+            if(index===1){
+                this.currentTab = 0;
+                this.$message.error("暂未开通往返机票购买功能");
+            }
         },
         
         // 出发城市输入框值发生变化时候会触发
@@ -242,6 +247,7 @@ export default {
     box-sizing: border-box;
     border-top:3px #eee solid;
     background:#eee;
+    cursor: pointer;
   }
 
   .active{

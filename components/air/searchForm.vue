@@ -31,6 +31,7 @@
                 @select="handleDestSelect"
                 class="el-autocomplete"
                 v-model="form.destCity"
+                @blur="handleBlur('dest')"
                 ></el-autocomplete>
             </el-form-item>
 

@@ -36,6 +36,18 @@ export const actions = {
         return res;
     },
 
+    // 注册
+    async register(store, data){
+        let res = await this.$axios({
+            url: "/accounts/register",
+            method: "POST",
+            data
+        });
+        if( res.status===200 ){
+            store.commit("setUserInfo", res.data);
+        }
+        return res;
+    },
 
     // 发送验证码
     async sendCaptcha(store, data){

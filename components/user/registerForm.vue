@@ -136,24 +136,14 @@ export default {
                     // 获取接口需要的数据
                     const { checkPassword, ...props } = this.form;
 
-                    let res = await this.$axios({
-                        url: "/accounts/register",
-                        method: "POST",
-                        data: props
-                    })
-                    const { status, data } = res;
+                    // 使用store.dispatch调用actions中的注册功能
+                    const res = await this.$store.dispatch("user/register", props);
 
-                    if( status===200 ){
+                    if( res.status===200 ){
                         this.$message.success("注册成功！");
-                        // 登录
-                        this.$store.commit("user/setUserInfo", data);
                         // 跳转到首页
                         this.$router.push("/");
                     }
-
-                } else {
-                    console.log('error submit!!');
-                    return false;
                 }
             });
         }

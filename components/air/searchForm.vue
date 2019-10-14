@@ -20,6 +20,7 @@
                 @select="handleDepartSelect"
                 class="el-autocomplete"
                 v-model="form.departCity"
+                @blur="handleBlur('depart')"
                 ></el-autocomplete>
             </el-form-item>
 
@@ -71,14 +72,17 @@ export default {
             // tab栏项的下标
             currentTab: 0,
 
-            // // 最终表单要提交的属性
+            // 最终表单要提交的属性
             form:{
                 departCity: "", // 出发城市
                 departCode: "", // 出发城市代码
                 destCity: "",  // 到达城市
                 destCode: "",  // 到达城市代码
                 departDate: "", // 日期字符串
-            }
+            },
+
+            // 根据搜索推荐的城市
+            cities: []
         }
     },
     methods: {
@@ -108,6 +112,8 @@ export default {
                     v.value = v.name.replace("市","");
                     return v
                 });
+                // 将搜索到的城市赋值给data中的cities，便于其他模块使用
+                this.cities = cities;
                 cb(cities);
             });
         },
@@ -142,6 +148,14 @@ export default {
         // 触发和目标城市切换时触发
         handleReverse(){
             
+        },
+
+        // 输入框失去焦点时触发
+        // 使用中括号获取对象的属性的方式，能够在同一个函数事项两个输入框的赋值
+        // 输入框失去焦点时，默认获取第一项
+        handleBlur(type){
+            this.form[type + "City"] = this.cities[0].value;
+            this.form[type + "Code"] = this.cities[0].code;
         },
 
         // 提交表单是触发

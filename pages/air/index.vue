@@ -7,7 +7,9 @@
     <!-- 搜索广告栏 -->
     <el-row type="flex" justify="space-between">
         <!-- 搜索表单 -->
-        <div>搜索</div>
+        <div>
+            <SearchForm />
+        </div>
 
         <!-- banner广告 -->
         <div class="sale-banner">
@@ -44,7 +46,14 @@
 </template>
 
 <script>
+// 引入搜索表单组件
+import SearchForm from "@/components/air/searchForm";
+
 export default {
+    // 注册
+    components:{
+        SearchForm
+    }
 
 }
 </script>

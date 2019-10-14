@@ -12,31 +12,37 @@
 
         <el-form class="search-form-content" ref="form" label-width="80px">
             <el-form-item label="出发城市">
-                <!-- fetch-suggestions 返回输入建议的方法 -->
-                <!-- select 点击选中建议项时触发 -->
+                <!-- fetch-suggestions：类似于input方法，在输入框的值发生变化的时候触发 -->
+                <!-- select：点击选中建议项时触发 -->
                 <el-autocomplete
                 :fetch-suggestions="queryDepartSearch"
                 placeholder="请搜索出发城市"
                 @select="handleDepartSelect"
                 class="el-autocomplete"
+                v-model="form.departCity"
                 ></el-autocomplete>
             </el-form-item>
+
             <el-form-item label="到达城市">
                 <el-autocomplete
                 :fetch-suggestions="queryDestSearch"
                 placeholder="请搜索到达城市"
                 @select="handleDestSelect"
                 class="el-autocomplete"
+                v-model="form.destCity"
                 ></el-autocomplete>
             </el-form-item>
+
             <el-form-item label="出发时间">
                 <!-- change 用户确认选择日期时触发 -->
                 <el-date-picker type="date" 
                 placeholder="请选择日期" 
                 style="width: 100%;"
-                @change="handleDate">
-                </el-date-picker>
+                @change="handleDate"
+                v-model="form.departDate"
+                ></el-date-picker>
             </el-form-item>
+
             <el-form-item label="">
                 <el-button style="width:100%;" 
                 type="primary" 
@@ -45,6 +51,7 @@
                     搜索
                 </el-button>
             </el-form-item>
+
             <div class="reverse">
                 <span @click="handleReverse">换</span>
             </div>
@@ -56,11 +63,22 @@
 export default {
     data(){
         return {
+            // tab栏的数据
             tabs: [
                 {icon: "iconfont icondancheng", name: "单程"},
                 {icon: "iconfont iconshuangxiang", name: "往返"}
             ],
+            // tab栏项的下标
             currentTab: 0,
+
+            // // 最终表单要提交的属性
+            form:{
+                departCity: "", // 出发城市
+                departCode: "", // 出发城市代码
+                destCity: "",  // 到达城市
+                destCode: "",  // 到达城市代码
+                departDate: "", // 日期字符串
+            }
         }
     },
     methods: {

@@ -93,7 +93,10 @@ export default {
         // 数组中的元素必须是一个对象，对象中必须要有value属性
         queryDepartSearch(value, cb){
             // 如果输入框没有值，不执行搜索
-            if(!value) return;
+            if(!value){
+                cb([]);
+                return;
+            }
 
             // 搜索实时机票城市
             this.$axios({
@@ -121,7 +124,9 @@ export default {
        
         // 出发城市下拉选择时触发
         handleDepartSelect(item) {
-            
+            // 获取表单需要的数据，出发城市和出发城市代码
+            this.form.departCity = item.value;
+            this.form.departCode = item.code;
         },
 
         // 目标城市下拉选择时触发

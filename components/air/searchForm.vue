@@ -153,7 +153,11 @@ export default {
 
         // 触发和目标城市切换时触发
         handleReverse(){
-            
+            const { departCity, departCode, destCity, destCode } = this.form;
+            this.form.departCity = destCity;
+            this.form.departCode = destCode;
+            this.form.destCity = departCity;
+            this.form.destCode = departCode;
         },
 
         // 输入框失去焦点时触发

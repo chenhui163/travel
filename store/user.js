@@ -20,5 +20,20 @@ export const mutations = {
     }
 };
 
-// 存放的是异步修改state的方法
-export const actions = {};
+// 存放的是异步方法
+export const actions = {
+
+    // 登录
+    async login(store, data){
+        let res = await this.$axios({
+            url: "/accounts/login",
+            method: "POST",
+            data,
+        });
+        if(res.status === 200 ) {
+            store.commit("setUserInfo", res.data);
+        }
+        return res;
+    }
+
+};

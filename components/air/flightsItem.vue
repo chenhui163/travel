@@ -1,5 +1,5 @@
 <template>
-    <div class="flight-item">
+    <div class="flight-item" @click="flag = !flag">
         <div>
             <!-- 显示的机票信息 -->
             <el-row type="flex" align="middle" class="flight-info">
@@ -26,7 +26,7 @@
                 </el-col>
             </el-row>
         </div>
-        <div class="flight-recommend">
+        <div class="flight-recommend" v-if="flag">
             <!-- 隐藏的座位信息列表 -->
             <el-row type="flex"  
                 justify="space-between" 
@@ -73,6 +73,14 @@ export default {
         }
     },
 
+    // 数据
+    data(){
+        return {
+            // 控制航班列表具体信息展开的开关
+            flag: false
+        }
+    },
+
     // 计算属性
     computed:{
 
@@ -97,7 +105,7 @@ export default {
             return `${hours}小时${minuts}分`;
         }
     },
-    
+
 }
 </script>
 

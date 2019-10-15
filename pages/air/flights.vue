@@ -4,7 +4,7 @@
       <!-- 顶部过滤列表 -->
       <div class="flights-content">
         <!-- 过滤条件 -->
-        <div></div>
+        <FlightsFilters/>
 
         <!-- 航班头部布局 -->
         <FlightsListHead />
@@ -54,12 +54,15 @@ import moment from "moment";
 import FlightsListHead from "@/components/air/flightsListHead";
 // 引入航班列表组件
 import FlightsItem from "@/components/air/flightsItem";
+// 引入航班筛选组件
+import FlightsFilters from "@/components/air/flightsFilters";
 
 export default {
   // 注册
   components: {
     FlightsListHead,
-    FlightsItem
+    FlightsItem,
+    FlightsFilters
   },
 
   // 数据

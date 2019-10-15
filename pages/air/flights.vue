@@ -31,6 +31,7 @@
                     total：总的数据条数
                   -->
                 <el-pagination
+                    v-if="flightsData.flights.length"
                     @size-change="handleSizeChange"
                     @current-change="handleCurrentChange"
                     :current-page="pageIndex"
@@ -39,6 +40,11 @@
                     layout="total, sizes, prev, pager, next, jumper"
                     :total="flightsData.total">
                 </el-pagination>
+
+                <!-- 航班数据为空时的提示信息 -->
+                <div class="tips" v-if="flightsData.flights.length===0 && loading">
+                    <p>温馨提示：暂无相关航班信息</p>
+                </div>
 
             </div>
 
@@ -71,7 +77,9 @@ export default {
     data(){
         return {
             // 航班列表的总数据
-            flightsData:{},
+            flightsData:{
+                flights:[]
+            },
 
             // 分页使用的数据数组
             pageDate:[],
@@ -79,6 +87,9 @@ export default {
             pageIndex: 1,
             // 当前页面显示条数
             pageSize: 5,
+
+            // 判断页面是否加载完毕
+            loading: false
         }
     },
 
@@ -97,6 +108,9 @@ export default {
 
                 // 获取分页的第一页数据
                 this.pageDate = this.flightsData.flights.slice(0,5);
+
+                // 加载完毕后，修改loading的值为true
+                this.loading = true;
             }
         })
     },
@@ -136,6 +150,10 @@ export default {
     .flights-content{
         width:745px;
         font-size:14px;
+
+        .tips{
+            text-align: center;
+        }
     }
 
     .aside{

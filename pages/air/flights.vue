@@ -11,7 +11,7 @@
                 
                 <!-- 航班头部布局 -->
                 <div>
-                    
+                    <FlightsListHead />
                 </div>
                 
                 
@@ -33,7 +33,16 @@
 
 import moment from "moment";
 
+// 引入航班列表头部组件
+import FlightsListHead from "@/components/air/flightsListHead";
+
 export default {
+
+    // 注册
+    components:{
+        FlightsListHead
+    },
+
     data(){
         return {
             

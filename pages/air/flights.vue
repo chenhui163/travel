@@ -67,7 +67,7 @@ export default {
             // 如果请求成功，将数据赋值给航班列表总数据
             if(status===200){
                 this.flightsData = data;
-                console.log(data.flights);
+                // console.log(data.flights);
             }
         })
     }

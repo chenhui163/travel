@@ -73,7 +73,31 @@ export default {
         }
     },
 
+    // 计算属性
+    computed:{
 
+        // 航班起止花费时间
+        flightsTime(){
+            // 获取航班起止时间，转换成数组
+            let start = this.item.dep_time.split(":");
+            let end = this.item.arr_time.split(":");
+
+            // 转换成分钟
+            // 如果飞行时间过了凌晨，就多加24小时到到达时间
+            if(end[0]<start[0]){ end[0] += 24;}
+
+            start = start[0] * 60 + (+start[1]);
+            end = end[0] * 60 + (+end[1]);
+
+            // 计算相差时间
+            const res = end - start;
+            const hours = Math.floor(res / 60);
+            const minuts = res % 60;
+
+            return `${hours}小时${minuts}分`;
+        }
+    },
+    
 }
 </script>
 

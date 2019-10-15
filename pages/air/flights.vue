@@ -10,15 +10,16 @@
                 </div>
                 
                 <!-- 航班头部布局 -->
-                <div>
-                    <FlightsListHead />
-                </div>
+                <FlightsListHead />
                 
                 
                 <!-- 航班信息 -->
-                <div>
-                    <FlightsItem />
-                </div>
+                <!-- 遍历航班列表数据，将航班列表数组每一项传递给航班信息组件 -->
+                <FlightsItem 
+                    v-for="(item,index) in flightsData.flights"
+                    :key="index"
+                    :item="item"
+                />
             </div>
 
             <!-- 侧边栏 -->
@@ -46,10 +47,29 @@ export default {
         FlightsItem
     },
 
+    // 数据
     data(){
         return {
-            
+            // 航班列表的总数据
+            flightsData:{}
         }
+    },
+
+    // 页面加载完毕时执行
+    mounted(){
+        // params：get方式传递url参数的方法
+        // this.$route.query：获取url地址栏中的参数组成的对象
+        this.$axios({
+            url:"/airs",
+            params: this.$route.query
+        }).then(res=>{
+            const {status, data} = res;
+            // 如果请求成功，将数据赋值给航班列表总数据
+            if(status===200){
+                this.flightsData = data;
+                console.log(data.flights);
+            }
+        })
     }
 }
 </script>

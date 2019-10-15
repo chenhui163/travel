@@ -1,6 +1,6 @@
 <template>
-    <div class="flight-item" @click="flag = !flag">
-        <div>
+    <div class="flight-item">
+        <div  @click="flag = !flag">
             <!-- 显示的机票信息 -->
             <el-row type="flex" align="middle" class="flight-info">
                 <el-col :span="6">
@@ -47,7 +47,9 @@
                         <el-col :span="3" class="choose-button">
                             <el-button 
                             type="warning" 
-                            size="mini">
+                            size="mini"
+                            @click="handleChoose(item.id,item.seat_infos.ota_id)"
+                            >
                             选定
                             </el-button>
                             <p>剩余：{{v.discount}}</p>
@@ -105,6 +107,31 @@ export default {
             return `${hours}小时${minuts}分`;
         }
     },
+
+    //方法
+    methods:{
+        // 选定航班舱位
+        // flights_id：航班id
+        // seat_id：舱位id
+        handleChoose(flights_id,seat_xid){
+
+            // 登录验证
+
+
+            // 请求接口跳转到订单页，通过url地址栏传递参数
+            this.$axios({
+                url: "/airs/:id",
+                params:{
+                    id: flights_id,
+                    seat_xid
+                }
+            }).then(res=>{
+                console.log(res);   // 打印正确结果
+            }).catch(res=>{
+                console.log(res);   // 打印错误结果
+            })
+        }
+    }
 
 }
 </script>

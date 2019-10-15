@@ -4,7 +4,9 @@
       <!-- 顶部过滤列表 -->
       <div class="flights-content">
         <!-- 过滤条件 -->
-        <FlightsFilters/>
+        <FlightsFilters
+            :data="flightsData"
+        />
 
         <!-- 航班头部布局 -->
         <FlightsListHead />
@@ -71,6 +73,8 @@ export default {
       // 航班列表的总数据
       flightsData: {
         flights: [],
+        info: {},
+        options: {},
         total: 0
       },
 
@@ -96,6 +100,7 @@ export default {
       // 如果请求成功，将数据赋值给航班列表总数据
       if (status === 200) {
         this.flightsData = data;
+        console.log(data)
 
         // 加载完毕后，修改loading的值为true
         this.loading = true;

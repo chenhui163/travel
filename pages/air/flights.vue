@@ -17,7 +17,7 @@
                 
                 <!-- 航班信息 -->
                 <div>
-                    
+                    <FlightsItem />
                 </div>
             </div>
 
@@ -35,12 +35,15 @@ import moment from "moment";
 
 // 引入航班列表头部组件
 import FlightsListHead from "@/components/air/flightsListHead";
+// 引入航班列表组件
+import FlightsItem from "@/components/air/flightsItem";
 
 export default {
 
     // 注册
     components:{
-        FlightsListHead
+        FlightsListHead,
+        FlightsItem
     },
 
     data(){

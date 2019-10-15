@@ -153,6 +153,12 @@ export default {
             this.pageIndex = 1;     // 返回第一页渲染
             this.flightsData.flights = arr;     // 替换要渲染的数据
             this.flightsData.total = arr.length;    // 更新分页组件的条数
+        }else{
+            // 如果没有数据，说明撤销了筛选
+            // 使用备份数据恢复航班信息
+            this.pageIndex = 1;
+            this.flightsData.total = this.filterFlightsData.flights.length;
+            this.flightsData.flights = this.filterFlightsData.flights;
         }
     }
 

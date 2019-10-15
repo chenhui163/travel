@@ -140,10 +140,14 @@ export default {
         
         // 撤销条件时候触发
         handleFiltersCancel(){
-            airport: ""    
-            flightTimes: ""
-            company: ""    
-            airSize: ""    
+            // 清空所有筛选条件
+            this.airport = "";
+            this.flightTimes = "";
+            this.company = "";
+            this.airSize = "";
+
+            // 出发事件，恢复备份信息
+            this.$emit("handleFilter");
         },
     }
 }

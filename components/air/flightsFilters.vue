@@ -93,22 +93,49 @@ export default {
     methods: {
         // 选择机场时候触发
         handleAirport(value){
-            
+            // 通过filter方法筛选数组中出发机场和选中的出发机场名字相同的数据
+            // 这些数据是一个数组
+            const arr = this.data.flights.filter(v=>{
+                return v.org_airport_name === value;
+            });
+
+            // 调用emit方法出发父组件传过来的方法，将arr的值返回父组件
+            this.$emit("handleFilter",arr);
         },
 
         // 选择出发时间时候触发
         handleFlightTimes(value){
+            // 将出发时间分割成数组
+            const [from,to] = value.split(",");
             
+            // 通过filter方法筛选数组中出发时间段和选中的出发时间相同的数据
+            const arr = this.data.flights.filter(v=>{
+                // 截取出发时间的小时部分
+                const start = +v.dep_time.split(":")[0];
+                return start>from && start<to;
+            });
+            
+            this.$emit("handleFilter",arr);
         },
 
          // 选择航空公司时候触发
         handleCompany(value){
-            
+            // 遍历数组，找到与vlaue相同的项
+            const arr = this.data.flights.filter(v=>{
+                return v.airline_name === value;
+            });
+
+            this.$emit("handleFilter",arr);
         },
 
          // 选择机型时候触发
         handleAirSize(value){
-           
+           // 遍历数组，找到与vlaue相同的项
+            const arr = this.data.flights.filter(v=>{
+                return v.plane_size === value;
+            });
+
+            this.$emit("handleFilter",arr);
         },
         
         // 撤销条件时候触发

@@ -5,7 +5,8 @@
       <div class="flights-content">
         <!-- 过滤条件 -->
         <FlightsFilters
-            :data="flightsData"
+            :data="filterFlightsData"
+            @handleFilter="handleFilter"
         />
 
         <!-- 航班头部布局 -->
@@ -78,6 +79,13 @@ export default {
         total: 0
       },
 
+      // 缓存一份新的列表数据数据，这个列表不会被修改
+      filterFlightsData: {
+        flights: [],
+        info: {},
+        options: {}
+      },
+
       // 当前页码
       pageIndex: 1,
       // 当前页面显示条数
@@ -100,7 +108,9 @@ export default {
       // 如果请求成功，将数据赋值给航班列表总数据
       if (status === 200) {
         this.flightsData = data;
-        console.log(data)
+        // 将数据赋值给航班列表总数据
+        this.filterFlightsData = { ...data };
+        console.log(this.filterFlightsData)
 
         // 加载完毕后，修改loading的值为true
         this.loading = true;
@@ -131,7 +141,21 @@ export default {
     // 当前显示页码改变时触发
     handleCurrentChange(val) {
       this.pageIndex = val;
+    },
+
+    // 根据筛选条件更新航班信息的方法，可接收一个数组
+    handleFilter(arr){
+        // 根据返回的数据进行页面更新
+        // 当this.flightsData.flights产生变化时，页面数据会重新渲染
+
+        // 当有数据传递过时，才进行数据更新
+        if(arr){
+            this.pageIndex = 1;     // 返回第一页渲染
+            this.flightsData.flights = arr;     // 替换要渲染的数据
+            this.flightsData.total = arr.length;    // 更新分页组件的条数
+        }
     }
+
   }
 };
 </script>

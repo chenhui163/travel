@@ -45,6 +45,7 @@
       <!-- 侧边栏 -->
       <div class="aside">
         <!-- 侧边栏组件 -->
+        <FlightsAside />
       </div>
     </el-row>
   </section>
@@ -59,13 +60,16 @@ import FlightsListHead from "@/components/air/flightsListHead";
 import FlightsItem from "@/components/air/flightsItem";
 // 引入航班筛选组件
 import FlightsFilters from "@/components/air/flightsFilters";
+// 引入航班搜索历史记录组件
+import FlightsAside from "@/components/air/flightsAside";
 
 export default {
   // 注册
   components: {
     FlightsListHead,
     FlightsItem,
-    FlightsFilters
+    FlightsFilters,
+    FlightsAside
   },
 
   // 数据

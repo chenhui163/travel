@@ -3,10 +3,16 @@
         <div class="air-column">
             <h2>乘机人</h2>
             <el-form class="member-info">
-                <div class="member-info-item" >
+                <div class="member-info-item" 
+                    v-for="(item,index) in users"
+                    :key="index"
+                >
 
                     <el-form-item label="乘机人类型">
-                        <el-input placeholder="姓名" class="input-with-select">
+                        <el-input placeholder="姓名" 
+                            class="input-with-select"
+                            v-model="item.username"
+                        >
                             <el-select 
                             slot="prepend" 
                             value="1" 
@@ -18,7 +24,10 @@
 
                     <el-form-item label="证件类型">
                         <el-input 
-                        placeholder="证件号码"  class="input-with-select">
+                            placeholder="证件号码"  
+                            class="input-with-select"
+                            v-model="item.id"
+                        >
                             <el-select 
                             slot="prepend" 
                             value="1"           
@@ -28,7 +37,10 @@
                         </el-input>
                     </el-form-item>
 
-                    <span class="delete-user" @click="handleDeleteUser()">-</span>
+                    <span class="delete-user" 
+                        @click="handleDeleteUser()"
+                        v-if="index>0"
+                    >-</span>
                 </div>
             </el-form>
 
@@ -75,10 +87,30 @@
 
 <script>
 export default {
+
+    // 数据
+    data(){
+        return {
+            // 乘机人可以有多个，使用数组保存
+            // username：乘机人姓名
+            // id：乘机人的证件号
+            users: [
+                { 
+                    username: "",
+                    id: ""
+                }
+            ]
+        }
+    },
+
+    // 方法
     methods: {
         // 添加乘机人
         handleAddUsers(){
-            
+            this.users.push({
+                username: "",
+                id: ""
+            })
         },
         
         // 移除乘机人

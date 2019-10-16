@@ -154,11 +154,24 @@ export default {
             contactPhone: this.contactPhone,
             captcha: this.captcha,
             invoice: this.invoice,
-            seat_xid: this.$route.query.id,
-            air: this.$route.query.seat_xid,
+            seat_xid: this.$route.query.seat_xid,
+            air: this.$route.query.id,
         }
         
-        console.log(data);
+        // 从本地存储获取token
+        const token = this.$store.state.user.userInfo.token || "";
+        // 发送请求
+        this.$axios({
+            url: "/airorders",
+            method: "POST",
+            data,
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }).then(res=>{
+            console.log(res)
+        })
+
     }
   }
 };

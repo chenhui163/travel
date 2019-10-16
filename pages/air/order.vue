@@ -43,7 +43,6 @@ export default {
                 seat_xid: query.seat_xid
             }
         }).then(res=>{
-            console.log(res)
             const { status, data } = res;
 
             if(status === 200) {

@@ -178,7 +178,6 @@ export default {
 
         // 提交表单是触发
         handleSubmit(){
-            console.log(this.form)
 
             // 自定义验证
             let rules = {

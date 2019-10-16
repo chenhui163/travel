@@ -79,7 +79,8 @@ export default {
         total: 0
       },
 
-      // 缓存一份新的列表数据数据，这个列表不会被修改
+	  // 缓存一份新的列表数据数据，这个列表不会被修改
+	  // 要赋初始值，因为有可能组件加载完时，数据还没起请求回来，就会造成报错
       filterFlightsData: {
         flights: [],
         info: {},
@@ -107,8 +108,9 @@ export default {
       const { status, data } = res;
       // 如果请求成功，将数据赋值给航班列表总数据
       if (status === 200) {
+		// 将数据赋值给航班列表总数据
         this.flightsData = data;
-        // 将数据赋值给航班列表总数据
+        // 赋值多一份给缓存数据
         this.filterFlightsData = { ...data };
         console.log(this.filterFlightsData)
 

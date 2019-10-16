@@ -48,7 +48,7 @@
                             <el-button 
                             type="warning" 
                             size="mini"
-                            @click="handleChoose(item.id,item.seat_infos.ota_id)"
+                            @click="handleChoose(item.id,v.seat_xid)"
                             >
                             选定
                             </el-button>
@@ -113,16 +113,16 @@ export default {
         // 选定航班舱位
         // flights_id：航班id
         // seat_id：舱位id
-        handleChoose(flights_id,seat_xid){
+        handleChoose(id,seat_xid){
 
             // 登录验证
 
 
             // 请求接口跳转到订单页，通过url地址栏传递参数
             this.$axios({
-                url: "/airs/:id",
+                url: "/airs/",
                 params:{
-                    id: flights_id,
+                    id,
                     seat_xid
                 }
             }).then(res=>{

@@ -219,6 +219,9 @@ export default {
                 path: "/air/flights",
                 query: this.form
             })
+
+            // 添加航班搜索记录到本地
+            this.$store.commit("air/setHistory", this.form);
         }
     },
     mounted() {

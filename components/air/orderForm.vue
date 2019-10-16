@@ -92,7 +92,7 @@ export default {
       contactName: "", // 联系人名字
       contactPhone: "", // 联系人电话
       invoice: false, // 是否需要发票，默认fasle
-      captcha: "000000" // 验证码
+      captcha: "" // 验证码
     };
   },
 
@@ -126,8 +126,22 @@ export default {
     },
 
     // 发送手机验证码
-    handleSendCaptcha() {
+    async handleSendCaptcha() {
+        // 判断手机号是否为空
+        if (!this.contactPhone) {
+            this.$message.error("请输入手机号码！");
+        }
 
+        // 调用user模块中的sendCaptcha方法发送验证码
+        const res = await this.$store.dispatch("user/sendCaptcha", this.contactPhone);
+
+        const code = res.data.code;
+        // 验证码弹窗提示
+        if(res.status===200){
+            this.$alert(`${code}`, '注册验证码', {
+                confirmButtonText: '确定'
+            });
+        }
     },
 
     // 提交订单

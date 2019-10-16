@@ -3,7 +3,7 @@
         <el-row type="flex" justify="space-between">
             <!-- 订单表单 -->
             <div class="main">
-                <OrderForm :insurances="insurances"/>
+                <OrderForm :insurancesData="insurancesData"/>
             </div>
 
             <!-- 侧边栏 -->
@@ -27,7 +27,7 @@ export default {
     // 数据
     data(){
         return {
-            insurances: []
+            insurancesData: []
         }
     },
 
@@ -48,7 +48,7 @@ export default {
 
             if(status === 200) {
                 // 将获取到的保险信息数组赋值给data中的insurances
-                this.insurances = data.insurances;
+                this.insurancesData = data.insurances;
             }
         })
     }

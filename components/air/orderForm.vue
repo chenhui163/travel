@@ -51,10 +51,11 @@
             <h2>保险</h2>
             <div>
                 <div class="insurance-item"
-                    v-for="(item,index) in insurances"
+                    v-for="(item,index) in insurancesData"
                     :key="index"
                 >
                     <el-checkbox 
+                    @change="handleChange(item.id)"
                     :label="`${item.type}：￥${item.price}/份×1  最高赔付${item.compensation}`" 
                     border>
                     </el-checkbox> 
@@ -92,7 +93,7 @@
 export default {
 
     props:{
-        insurances: {
+        insurancesData: {
             type : Array,
             default: []
         }
@@ -109,7 +110,13 @@ export default {
                     username: "",
                     id: ""
                 }
-            ]
+            ],
+
+            insurances: [],     // 保险id的数组集合
+            contactName: "",    // 联系人名字
+            contactPhone: "",   // 联系人电话
+            invoice: false,     // 是否需要发票，默认fasle
+            captcha: "000000"   // 验证码
         }
     },
 
@@ -127,6 +134,19 @@ export default {
         handleDeleteUser(index){
             // 删除指定位置的1条数据
             this.users.splice(index,1);
+        },
+
+        // 变更保险
+        handleChange(id){
+            // 查找insurances数组中是否已存在变更的保险项
+            const index = this.insurances.indexOf(id);
+            if(index > -1){
+                // 如果找到有相同的，就删除那一项
+                this.insurances.splice(index, 1);
+            }else {
+                // 如果没有找到，就追加到insurances数组中
+                this.insurances.push(id);
+            }
         },
         
         // 发送手机验证码

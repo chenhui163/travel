@@ -111,24 +111,16 @@ export default {
     //方法
     methods:{
         // 选定航班舱位
-        // flights_id：航班id
-        // seat_id：舱位id
-        handleChoose(id,seat_xid){
-
-            // 登录验证
-
-
-            // 请求接口跳转到订单页，通过url地址栏传递参数
-            this.$axios({
-                url: "/airs/",
-                params:{
+        // id：航班id
+        // seat_xid：舱位id
+        async handleChoose(id,seat_xid){
+            // 通过url携带参数跳转到机票预定页
+            this.$router.push({
+                path: "/air/order", 
+                query: {
                     id,
                     seat_xid
                 }
-            }).then(res=>{
-                console.log(res);   // 打印正确结果
-            }).catch(res=>{
-                console.log(res);   // 打印错误结果
             })
         }
     }

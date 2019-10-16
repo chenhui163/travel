@@ -105,8 +105,6 @@ export default {
   mounted() {
 	  // 请求航班列表数据
 	this.getFlightsData();
-	
-	console.log(this.filterFlightsData);
   },
 
 	// 监听
@@ -176,7 +174,7 @@ export default {
 				this.flightsData = data;
 				// 赋值多一份给缓存数据
 				this.filterFlightsData = { ...data };
-
+				console.log(this.filterFlightsData);
 				// 加载完毕后，修改loading的值为true
 				this.loading = true;
 			}

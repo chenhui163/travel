@@ -103,26 +103,19 @@ export default {
 
   // 页面加载完毕时执行
   mounted() {
-    // params：get方式传递url参数的方法
-    // this.$route.query：获取url地址栏中的参数组成的对象
-    this.$axios({
-      url: "/airs",
-      params: this.$route.query
-    }).then(res => {
-      const { status, data } = res;
-      // 如果请求成功，将数据赋值给航班列表总数据
-      if (status === 200) {
-		// 将数据赋值给航班列表总数据
-        this.flightsData = data;
-        // 赋值多一份给缓存数据
-        this.filterFlightsData = { ...data };
-        console.log(this.filterFlightsData)
-
-        // 加载完毕后，修改loading的值为true
-        this.loading = true;
-      }
-    });
+	  // 请求航班列表数据
+	this.getFlightsData();
+	
+	console.log(this.filterFlightsData);
   },
+
+	// 监听
+	watch:{
+		$route(){
+			// 请求航班列表数据
+			this.getFlightsData();
+		}
+	},
 
   // 计算
   computed: {
@@ -166,7 +159,29 @@ export default {
             this.flightsData.total = this.filterFlightsData.flights.length;
             this.flightsData.flights = this.filterFlightsData.flights;
         }
-    }
+    },
+
+	// 请求航班列表数据
+	getFlightsData(){
+		// params：get方式传递url参数的方法
+		// this.$route.query：获取url地址栏中的参数组成的对象
+		this.$axios({
+		url: "/airs",
+		params: this.$route.query
+		}).then(res => {
+		const { status, data } = res;
+			// 如果请求成功，将数据赋值给航班列表总数据
+			if (status === 200) {
+				// 将数据赋值给航班列表总数据
+				this.flightsData = data;
+				// 赋值多一份给缓存数据
+				this.filterFlightsData = { ...data };
+
+				// 加载完毕后，修改loading的值为true
+				this.loading = true;
+			}
+		});
+	}
 
   }
 };

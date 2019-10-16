@@ -38,7 +38,7 @@
                     </el-form-item>
 
                     <span class="delete-user" 
-                        @click="handleDeleteUser()"
+                        @click="handleDeleteUser(index)"
                         v-if="index>0"
                     >-</span>
                 </div>
@@ -114,8 +114,9 @@ export default {
         },
         
         // 移除乘机人
-        handleDeleteUser(){
-
+        handleDeleteUser(index){
+            // 删除指定位置的1条数据
+            this.users.splice(index,1);
         },
         
         // 发送手机验证码

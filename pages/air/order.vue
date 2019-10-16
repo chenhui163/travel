@@ -3,7 +3,7 @@
         <el-row type="flex" justify="space-between">
             <!-- 订单表单 -->
             <div class="main">
-                
+                <OrderForm />
             </div>
 
             <!-- 侧边栏 -->
@@ -15,7 +15,14 @@
 </template>
 
 <script>
+// 引入订创建订单的表单组件
+import OrderForm from "@/components/air/orderForm";
+
 export default {
+    // 注册
+    components:{
+        OrderForm
+    }
     
 }
 </script>

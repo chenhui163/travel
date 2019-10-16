@@ -220,7 +220,7 @@ export default {
                 query: this.form
             })
 
-            // 添加航班搜索记录到本地
+            // 添加航班搜索记录到本地存储
             this.$store.commit("air/setHistory", this.form);
         }
     },

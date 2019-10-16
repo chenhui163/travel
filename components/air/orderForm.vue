@@ -50,9 +50,12 @@
         <div class="air-column">
             <h2>保险</h2>
             <div>
-                <div class="insurance-item">
+                <div class="insurance-item"
+                    v-for="(item,index) in insurances"
+                    :key="index"
+                >
                     <el-checkbox 
-                    label="航空意外险：￥30/份×1  最高赔付260万" 
+                    :label="`${item.type}：￥${item.price}/份×1  最高赔付${item.compensation}`" 
                     border>
                     </el-checkbox> 
                 </div>
@@ -87,6 +90,13 @@
 
 <script>
 export default {
+
+    props:{
+        insurances: {
+            type : Array,
+            default: []
+        }
+    },
 
     // 数据
     data(){

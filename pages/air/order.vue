@@ -8,7 +8,7 @@
 
             <!-- 侧边栏 -->
             <div class="aside">
-                          
+                <OrderAside />   
             </div>
         </el-row>
     </div>
@@ -17,11 +17,14 @@
 <script>
 // 引入订创建订单的表单组件
 import OrderForm from "@/components/air/orderForm";
+// 引入订创建订单的侧边栏组件
+import OrderAside from "@/components/air/orderAside";
 
 export default {
     // 注册
     components:{
-        OrderForm
+        OrderForm,
+        OrderAside
     },
 
     // 数据

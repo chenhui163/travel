@@ -8,7 +8,7 @@
 
             <!-- 侧边栏 -->
             <div class="aside">
-                <OrderAside />   
+                <OrderAside :flightsData="flightsData"/>   
             </div>
         </el-row>
     </div>
@@ -33,6 +33,7 @@ export default {
             // 航班的信息
             flightsData:{
                 insurances: [], // 初始化保险数组
+                seat_infos: {}  // 初始化座位信息
             }
         }
     },

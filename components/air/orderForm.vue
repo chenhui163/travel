@@ -71,7 +71,9 @@ export default {
   props: {
     insurancesData: {
       type: Array,
-      default: []
+      default(){
+        return []
+      }
     }
   },
 
@@ -127,9 +129,10 @@ export default {
 
     // 发送手机验证码
     async handleSendCaptcha() {
-        // 判断手机号是否为空
+        // 判断手机号是否为空，为空的话就不执行下面的发送验证码操作，并弹出提示信息
         if (!this.contactPhone) {
-            this.$message.error("请输入手机号码！");
+			this.$message.error("请输入手机号码！");
+			return ;
         }
 
         // 调用user模块中的sendCaptcha方法发送验证码
@@ -156,7 +159,23 @@ export default {
             invoice: this.invoice,
             seat_xid: this.$route.query.seat_xid,
             air: this.$route.query.id,
-        }
+		}
+		
+		// 遍历data，检查是否有空值
+		let flag = true;
+		for(let key in data){
+			// 检查除了发票外的所有属性是否有值，如果没有就将flag变为false
+			if(key!=="invoice" && !data[key]){
+				flag = false;
+			}
+		}
+		// 根据flag判断data是否完整决定要不要弹出提示信息，true代表完整，false代表不完整
+		if(flag){
+			this.$message({
+				message: "正在生成订单！请稍等",
+				type: "success"
+			})
+		}
         
         // 从本地存储获取token
         const token = this.$store.state.user.userInfo.token || "";

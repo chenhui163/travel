@@ -174,7 +174,6 @@ export default {
 				this.flightsData = data;
 				// 赋值多一份给缓存数据
 				this.filterFlightsData = { ...data };
-				console.log(this.filterFlightsData);
 				// 加载完毕后，修改loading的值为true
 				this.loading = true;
 			}

@@ -3,7 +3,7 @@
         <el-row type="flex" justify="space-between">
             <!-- 订单表单 -->
             <div class="main">
-                <OrderForm :insurancesData="insurancesData"/>
+                <OrderForm :insurancesData="flightsData.insurances"/>
             </div>
 
             <!-- 侧边栏 -->
@@ -30,7 +30,10 @@ export default {
     // 数据
     data(){
         return {
-            insurancesData: []
+            // 航班的信息
+            flightsData:{
+                insurances: [], // 初始化保险数组
+            }
         }
     },
 
@@ -50,7 +53,8 @@ export default {
 
             if(status === 200) {
                 // 将获取到的保险信息数组赋值给data中的insurances
-                this.insurancesData = data.insurances;
+                this.flightsData = data;
+                console.log(this.flightsData)
             }
         })
     }

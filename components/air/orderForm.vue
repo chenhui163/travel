@@ -2,6 +2,7 @@
   <div class="main">
     <div class="air-column">
       <h2>乘机人</h2>
+	  <input type="hidden" :value="allPrice">
       <el-form class="member-info">
         <div class="member-info-item" v-for="(item,index) in users" :key="index">
           <el-form-item label="乘机人类型">
@@ -30,7 +31,7 @@
     <div class="air-column">
       <h2>保险</h2>
       <div>
-        <div class="insurance-item" v-for="(item,index) in insurancesData" :key="index">
+        <div class="insurance-item" v-for="(item,index) in flightsData.insurancesData" :key="index">
           <el-checkbox
             @change="handleChange(item.id)"
             :label="`${item.type}：￥${item.price}/份×1  最高赔付${item.compensation}`"
@@ -69,10 +70,11 @@
 <script>
 export default {
   props: {
-    insurancesData: {
-      type: Array,
+	  // 航班数据
+    flightsData: {
+      type: Object,
       default(){
-        return []
+        return {}
       }
     }
   },
@@ -96,6 +98,37 @@ export default {
       invoice: false, // 是否需要发票，默认fasle
       captcha: "" // 验证码
     };
+  },
+
+  // 计算
+  computed:{
+	  // 订单总价格
+	  allPrice(){
+		  	if(!this.flightsData) return;
+
+			// 总价格
+			let price = 0;
+			// 乘机人数
+			let count = this.users.length;
+
+			// 计算净票价的价格
+			price = this.flightsData.seat_infos.org_settle_price * count;
+
+			// 计算保险价格
+			// 找到总数据中保险数组与data中的保险数组id相同的
+			// flightsData.insurances中id比下标少1
+			this.insurances.forEach(v=>{
+				price += this.flightsData.insurances[v-1].price * count;
+			})
+
+			// 计算燃油费
+			price += this.flightsData.airport_tax_audlet * count;
+
+			// 将数据返回父组件
+			this.$emit("set-all-price", price, count);
+			// 返回总价格
+		  	return price;
+	  }
   },
 
   // 方法

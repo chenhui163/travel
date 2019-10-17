@@ -3,12 +3,19 @@
         <el-row type="flex" justify="space-between">
             <!-- 订单表单 -->
             <div class="main">
-                <OrderForm :insurancesData="flightsData.insurances"/>
+                <OrderForm 
+                    :flightsData="flightsData"
+                    @set-all-price="setAllPrice"
+                />
             </div>
 
             <!-- 侧边栏 -->
             <div class="aside">
-                <OrderAside :flightsData="flightsData"/>   
+                <OrderAside 
+                    :flightsData="flightsData"
+                    :allPrice="allPrice"
+                    :count="count"
+                />   
             </div>
         </el-row>
     </div>
@@ -34,7 +41,11 @@ export default {
             flightsData:{
                 insurances: [], // 初始化保险数组
                 seat_infos: {}  // 初始化座位信息
-            }
+            },
+            // 订单总价格
+            allPrice: 0,
+            // 订单总人数
+            count: 0
         }
     },
 
@@ -58,9 +69,16 @@ export default {
                 console.log(this.flightsData)
             }
         })
-    }
+    },
 
-    
+    // 方法
+    methods:{
+        // 设置订单总价格
+        setAllPrice(price, count){
+            this.allPrice = price;
+            this.count = count;
+        }
+    }
 }
 </script>
 

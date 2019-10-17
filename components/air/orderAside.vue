@@ -32,16 +32,16 @@
         <el-row type="flex" justify="space-between" class="info-bar">
             <span>成人机票</span>
             <span>￥{{flightsData.seat_infos.org_settle_price}}</span>
-            <span>x1</span>
+            <span>x{{count}}</span>
         </el-row>
         <el-row type="flex" justify="space-between" class="info-bar">
             <span>机建＋燃油</span>
             <span>¥{{flightsData.airport_tax_audlet}}/人/单程</span>
-            <span>x1</span>
+            <span>x{{count}}</span>
         </el-row>
         <el-row type="flex" justify="space-between" align="middle" class="info-bar">
             <span>应付总额：</span>
-            <span class="price">￥ 0</span>
+            <span class="price">￥ {{allPrice}}</span>
         </el-row>           
     </div>
 </template>
@@ -57,7 +57,11 @@ export default {
                     
                 }
             }
-        }
+        },
+        //订单总价格
+        allPrice: 0,
+        // 订单总人数
+        count: 0
     },
 
     // 计算

@@ -37,6 +37,9 @@ export default {
             price: 0,
             // 支付信息
             payInfo : {},
+            // 订单编号
+            orderNo: "",
+            // 定时器编号
             timer: ""
         }
     },
@@ -48,7 +51,7 @@ export default {
         const token = this.$store.state.user.userInfo.token || JSON.parse(localStorage.getItem('vuex')|| "{}").user.userInfo.token;
         
         // 设置定时器
-        this.timer = setTimeout(async () => {
+        setTimeout(async () => {
             // 请求订单详情
             const res = await this.$axios({
                 url: "/airorders/" + id,
@@ -56,13 +59,13 @@ export default {
                     Authorization: `Bearer ${token}`
                 }
             });
-            console.log(res)
             // 获取付款链接，付款金额
-            const { payInfo, price} = res.data;
+            const { payInfo, price, orderNo} = res.data;
 
             if(res.status===200){
                 this.price = price;
                 this.payInfo = payInfo;
+                this.orderNo = orderNo;
 
                 // 生成二维码到canvas
                 const stage = document.querySelector("#qrcode-stage");
@@ -71,8 +74,43 @@ export default {
                 }); 
             }
 
-        }, 200);
+            // 设置定时器
+            this.timer = setInterval(async ()=>{
+                const res = await this.isPay();
+                const { statusTxt } = res.data;
+                if(statusTxt==="支付完成"){
+                    this.$message.success("支付完成！");
+                    // 支付完成时，清除定时器
+                    clearInterval(this.timer);
+                }
+            },3000);
 
+        }, 200);
+    },
+
+    // 方法
+    methods:{
+        // 查询付款状态
+        async isPay(){
+            const id = this.$route.query.id;    // 订单id
+            const nonce_str = this.price;       // 支付接口返回的订单金额
+            const out_trade_no = this.orderNo;  // 订单编号
+
+            // 发送请求查询付款状态
+            const res = await this.$axios({
+                url: "/airorders/checkpay",
+                method: "POST",
+                headers: {
+                    Authorization: `Bearer ${this.$store.state.user.userInfo.token}`
+                },
+                data: {
+                    id,
+                    nonce_str,
+                    out_trade_no
+                }
+            });
+            return res;
+        }
     }
 
 }

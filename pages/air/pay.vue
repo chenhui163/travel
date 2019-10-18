@@ -26,6 +26,9 @@
 </template>
 
 <script>
+// 引入生成二维码的插件
+import QRCode from "qrcode";
+
 export default {
 
     data(){
@@ -60,6 +63,12 @@ export default {
             if(res.status===200){
                 this.price = price;
                 this.payInfo = payInfo;
+
+                // 生成二维码到canvas
+                const stage = document.querySelector("#qrcode-stage");
+                QRCode.toCanvas(stage, payInfo.code_url, {
+                    width: 200
+                }); 
             }
 
         }, 200);

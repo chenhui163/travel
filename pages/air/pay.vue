@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="main">
+        <div class="main" v-if="!flag">
             <div class="pay-title">
                 支付总金额 <span class="pay-price">￥ {{price}}</span>
             </div>
@@ -22,6 +22,10 @@
                 </el-row>
             </div>
         </div>
+
+        <div class="ispay" v-if="flag">
+            <p>订单已支付！</p>
+        </div>
     </div>
 </template>
 
@@ -40,7 +44,10 @@ export default {
             // 订单编号
             orderNo: "",
             // 定时器编号
-            timer: ""
+            timer: "",
+
+            // 判断是否已支付
+            flag: false
         }
     },
     
@@ -72,16 +79,31 @@ export default {
                 QRCode.toCanvas(stage, payInfo.code_url, {
                     width: 200
                 }); 
+
+                // 第一次查询付款状态
+                const result = await this.isPay();
+                const { statusTxt } = result.data;
+                if(statusTxt==="支付完成"){
+                    this.$message.success("支付完成！");
+                    // 支付完成时，清除定时器
+                    clearInterval(this.timer);
+                    // 开关变为true
+                    this.flag = true;
+                }
             }
 
             // 设置定时器
             this.timer = setInterval(async ()=>{
+                if(this.flag) return ;
+                
                 const res = await this.isPay();
                 const { statusTxt } = res.data;
                 if(statusTxt==="支付完成"){
                     this.$message.success("支付完成！");
                     // 支付完成时，清除定时器
                     clearInterval(this.timer);
+                    // 开关变为true
+                    this.flag = true;
                 }
             },3000);
 
@@ -172,6 +194,11 @@ export default {
                 }
             }
         }
+    }
+
+    .ispay{
+        text-align: center;
+        font-size: 20px;
     }
 }
 </style>

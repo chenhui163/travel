@@ -88,6 +88,12 @@ export default {
         }, 200);
     },
 
+    // 页面销毁的时候
+    destroyed(){
+        // 清除定时器
+        clearInterval(this.timer);
+    },
+
     // 方法
     methods:{
         // 查询付款状态

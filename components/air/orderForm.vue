@@ -221,7 +221,16 @@ export default {
                 Authorization: `Bearer ${token}`
             }
         }).then(res=>{
-            console.log(res)
+			const {data} = res.data;
+			// 如果提交订单成功，跳转到订单支付页
+			if(res.status === 200 && res.data.message === "订单提交成功"){
+				this.$router.push({
+					path: "/air/pay",
+					query: {
+						id: data.id
+					}
+				});
+			}
         })
 
     }

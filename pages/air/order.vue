@@ -66,7 +66,6 @@ export default {
             if(status === 200) {
                 // 将获取到的保险信息数组赋值给data中的insurances
                 this.flightsData = data;
-                console.log(this.flightsData)
             }
         })
     },

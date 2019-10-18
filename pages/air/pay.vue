@@ -2,7 +2,7 @@
     <div class="container">
         <div class="main">
             <div class="pay-title">
-                支付总金额 <span class="pay-price">￥ 1000</span>
+                支付总金额 <span class="pay-price">￥ {{price}}</span>
             </div>
             <div class="pay-main">
                 <h4>微信支付</h4>
@@ -27,7 +27,45 @@
 
 <script>
 export default {
+
+    data(){
+        return {
+            // 订单价格
+            price: 0,
+            // 支付信息
+            payInfo : {},
+            timer: ""
+        }
+    },
     
+    mounted(){
+        // 获取订单id
+        const id = this.$route.query.id;
+        // 获取本地存储的token
+        const token = this.$store.state.user.userInfo.token || JSON.parse(localStorage.getItem('vuex')|| "{}").user.userInfo.token;
+        
+        // 设置定时器
+        this.timer = setTimeout(async () => {
+            // 请求订单详情
+            const res = await this.$axios({
+                url: "/airorders/" + id,
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            console.log(res)
+            // 获取付款链接，付款金额
+            const { payInfo, price} = res.data;
+
+            if(res.status===200){
+                this.price = price;
+                this.payInfo = payInfo;
+            }
+
+        }, 200);
+
+    }
+
 }
 </script>
 

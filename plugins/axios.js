@@ -13,5 +13,11 @@ export default (context)=>{
         if(statusCode === 400){
             Message.error(message);
         }
+
+        if(statusCode === 401){
+            // 路由重定向到登录页
+            context.redirect("/user/login");
+        }
+
     });
 }

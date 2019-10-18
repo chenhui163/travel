@@ -31,7 +31,7 @@
     <div class="air-column">
       <h2>保险</h2>
       <div>
-        <div class="insurance-item" v-for="(item,index) in flightsData.insurancesData" :key="index">
+        <div class="insurance-item" v-for="(item,index) in flightsData.insurances" :key="index">
           <el-checkbox
             @change="handleChange(item.id)"
             :label="`${item.type}：￥${item.price}/份×1  最高赔付${item.compensation}`"

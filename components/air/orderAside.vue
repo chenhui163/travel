@@ -47,6 +47,9 @@
 </template>
 
 <script>
+// 引入计算相隔时间方法
+import { getIntervalTime } from "@/untils/untils";
+
 export default {
    
     props: {
@@ -73,25 +76,8 @@ export default {
                 return "";
             }
 
-            // 1.将出发时间和到达时间转化为分钟
-            // 1.1转成数组
-            const dep = this.flightsData.dep_time.split(":");
-            const arr = this.flightsData.arr_time.split(":");
-
-            // 1.2转成分钟
-            const depMinuts = dep[0] * 60 + (+dep[1]);
-            // 到达时间如果是小于出发时间，说明时第二天
-            // 那么就给到达时间加上24小时
-            if( (+arr[0]) < dep[0] ){
-                arr[0] += 24;
-            }
-            const arrMinuts = arr[0] * 60 + (+arr[1]);
-            
-            // 2.计算相差分钟数
-            const coustTime = arrMinuts - depMinuts;
-
-            // 3.返回时间
-            return `${Math.floor(coustTime / 60)}时${coustTime % 60}分`;
+            const res = getIntervalTime(this.flightsData.dep_time, this.flightsData.arr_time);
+            return res;
         }
     }
 }

@@ -161,11 +161,6 @@ export default {
         },
     },
 
-    mounted(){
-        setTimeout(()=>{
-            console.log(this.data);
-        },2000)
-    }
 }
 </script>
 
